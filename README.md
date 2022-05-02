@@ -1,1 +1,1 @@
-# cocos2dx-tertis
+# cocos2dx-tetris
