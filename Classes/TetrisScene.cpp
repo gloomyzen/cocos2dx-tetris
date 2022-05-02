@@ -15,4 +15,10 @@ void TetrisScene::initScene() {
     return;
   }
 
+  for (auto it = document.MemberBegin(); it != document.MemberEnd(); ++it) {
+    assert(it->value.IsArray() && "shape must be array!");
+    auto name = it->name.GetString();
+
+  }
+
 }
