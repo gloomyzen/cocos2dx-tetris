@@ -5,7 +5,7 @@
 
 class TetrisScene : public cocos2d::Scene {
 public:
-  void initScene();
+    void initScene();
 };
 
-#endif // COCOS_TETRIS_TETRISSCENE_H
+#endif// COCOS_TETRIS_TETRISSCENE_H
