@@ -38,31 +38,38 @@ void TetrisScene::initScene() {
 }
 
 void TetrisScene::playGame() {
-    auto delay = cocos2d::DelayTime::create(tickTime);
+//    auto delay = cocos2d::DelayTime::create(tickTime);
     auto clb = cocos2d::CallFunc::create([this](){
         spawn();
         //todo add move
         //todo add check
     });
-    auto seq = cocos2d::Sequence::create(delay, clb, nullptr);
-    auto repeat = cocos2d::RepeatForever::create(seq);
-    this->runAction(repeat);
+//    auto seq = cocos2d::Sequence::create(clb, delay, nullptr);
+//    auto repeat = cocos2d::RepeatForever::create(seq);
+//    this->runAction(repeat);
+
+    this->runAction(clb);
 }
 
 void TetrisScene::spawn() {
     auto director = cocos2d::Director::getInstance();
     auto sceneSize = director->getVisibleSize();
     auto shape = shapes.front(); //todo add random shape
+    auto origSize = tileSize * tileScale;
+    const cocos2d::Vec2 basePosition = {sceneSize.width / origSize / 2 * origSize, sceneSize.height - origSize};
+    auto shapeHolder = new cocos2d::Node();
+    addChild(shapeHolder);
+    shapeHolder->setPosition(basePosition.x, basePosition.y - origSize * 2);
     for (const auto& item : shape) {
         auto sprite = new cocos2d::Sprite();
         sprite->initWithFile("tile.png");
-        addChild(sprite);
+        shapeHolder->addChild(sprite);
         sprite->setContentSize({tileSize, tileSize});
         sprite->setScale(tileScale);
         sprite->setAnchorPoint(cocos2d::Vec2::ZERO);
-        auto origSize = tileSize * tileScale;
-        sprite->setPositionY(sceneSize.height - origSize);
-        sprite->setPositionX(sceneSize.width / origSize / 2 * origSize);
+
+        sprite->setPositionX(origSize * item.x);
+        sprite->setPositionY(origSize * item.y);
     }
 
 }
